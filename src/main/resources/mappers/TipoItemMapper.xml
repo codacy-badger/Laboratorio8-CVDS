@@ -2,10 +2,38 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
+
 <mapper namespace="edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper">
+
+    <select parameterType="map" id="getTiposItems" resultMap="TipoItemResult">
+        select
+
+        ti.id as tipoItem_id,
+        ti.descripcion as tipoItem_descripcion
+
+        FROM VI_TIPOITEM as ti;
+
+    </select>
+
+    <select parameterType="map" id="getTipoItem" resultMap="TipoItemResult">
+        select
+
+        ti.id as tipoItem_id,
+        ti.descripcion as tipoItem_descripcion
+
+        FROM VI_TIPOITEM as ti
+
+        WHERE ti.id = #{idt};
+
+    </select>
+
+    <insert id="addTipoItem" parameterType="map" >
+        insert into VI_TIPOITEM(descripcion) values (#{des});
+    </insert>
+
     <resultMap type='TipoItem' id='TipoItemResult'>
-        <id property='id' column='id'/>
-        <result property='descripcion' column='descripcion'/>
+        <id property='id' column='tipoItem_id'/>
+        <result property='descripcion' column='tipoItem_descripcion'/>
     </resultMap>
 </mapper>

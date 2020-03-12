@@ -6,6 +6,18 @@
 <mapper namespace="edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper">
 
 
+
+    <select parameterType="map" id="consultarMultaRetrasoxDia" resultMap="ItemResult">
+        select
+
+        i.tarifaxdia
+
+        FROM VI_ITEMS as i
+
+        WHERE i.id = #{idt};
+
+    </select>
+
     <select parameterType="map" id="consultarItems" resultMap="ItemResult">
         select
 
