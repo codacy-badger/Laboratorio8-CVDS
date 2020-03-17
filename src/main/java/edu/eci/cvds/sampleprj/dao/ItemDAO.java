@@ -13,4 +13,6 @@ public interface ItemDAO {
    public List<Item> loadItems() throws PersistenceException;
 
    public int consultarMultaRetrasoxDia(int itemId) throws PersistenceException;
+
+   public List<Item> consultarItemsDisponibles() throws PersistenceException ;
 }

@@ -24,7 +24,9 @@ import java.sql.SQLException;
 
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
+import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemRentadoMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper;
+import edu.eci.cvds.samples.entities.ItemRentado;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -68,9 +70,11 @@ public class MyBatisExample {
 
         ItemMapper im = sqlss.getMapper(ItemMapper.class);
         ClienteMapper cm = sqlss.getMapper(ClienteMapper.class);
-
+        ItemRentadoMapper ir = sqlss.getMapper(ItemRentadoMapper.class);
         TipoItemMapper tm = sqlss.getMapper(TipoItemMapper.class);
-
+        System.out.println("Consultar item rentado por id");
+        System.out.println(ir.consultarItemRentado(2132577));
+        System.out.println(" ");
         System.out.println("Consultar tipo items");
         System.out.println(tm.getTiposItems());
         System.out.println(" ");

@@ -34,6 +34,43 @@
         left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id;
     </select>
 
+    <select parameterType="map" id="consultarItems" resultMap="ClienteResult">
+        select
+
+        c.nombre as nombreC,
+        c.documento as documentoC,
+        c.telefono as telefonoC,
+        c.direccion as direccionC,
+        c.email as emailC,
+        c.vetado as vetadoC,
+
+        ir.id as ir_id,
+        ir.fechainiciorenta as ir_fechainiciorenta,
+        ir.fechafinrenta as ir_fechafinrenta,
+
+        i.id as item_id,
+        i.nombre as item_nombre,
+        i.descripcion as item_descripcion,
+        i.fechalanzamiento as item_fechalanzamiento,
+        i.tarifaxdia as item_tarifaxdia,
+        i.formatorenta as item_formatorenta,
+        i.genero as item_genero,
+        ti.id as tipoItem_id,
+        ti.descripcion as tipoItem_descripcion
+
+        FROM VI_CLIENTES as c
+        left join VI_ITEMRENTADO as ir on c.documento=ir.CLIENTES_documento
+        left join VI_ITEMS as i on ir.ITEMS_id=i.id
+        left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id;
+
+        WHERE c.documento=#{idcliente};
+
+    </select>
+
+    <insert id="registrarCliente" parameterType="map" >
+        INSERT INTO VI_CLIENTES values (#{cliente.documento},#{cliente.nombre},#{cliente.telefono},#{cliente.direccion},#{cliente.email},#{cliente.vetado});
+    </insert>
+
     <select parameterType="map" id="consultarCliente" resultMap="ClienteResult">
         select
 

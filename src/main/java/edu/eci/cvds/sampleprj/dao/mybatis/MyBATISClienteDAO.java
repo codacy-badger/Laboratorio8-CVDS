@@ -6,6 +6,8 @@ import edu.eci.cvds.sampleprj.dao.ClienteDAO;
 import edu.eci.cvds.sampleprj.dao.PersistenceException;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.samples.entities.Cliente;
+import edu.eci.cvds.samples.entities.ItemRentado;
+
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -38,12 +40,32 @@ public class MyBATISClienteDAO implements ClienteDAO {
     }
 
     @Override
-    public void agregarItemRentadoACliente(int id, int idit, Date fechainicio, Date fechafin) throws PersistenceException {
+    public void agregarItemRentadoACliente(long id, int idit, Date fechainicio, Date fechafin) throws PersistenceException {
         try{
             clienteMapper.consultarClientes();
         }
         catch(org.apache.ibatis.exceptions.PersistenceException e){
             throw new PersistenceException("Error al agregar item rentado al cliente con id del item : "+id+" y id del tipo del item:"+idit,e);
+        }
+    }
+
+    @Override
+    public List<ItemRentado> consultarItemsCliente(long idcliente) throws PersistenceException {
+        try{
+            return clienteMapper.consultarItems(idcliente);
+        }
+        catch(org.apache.ibatis.exceptions.PersistenceException e){
+            throw new PersistenceException("Error al consultar los items del client" ,e);
+        }
+    }
+
+    @Override
+    public void registrarCliente(Cliente c) throws PersistenceException {
+        try{
+            clienteMapper.registrarCliente(c);
+        }
+        catch(org.apache.ibatis.exceptions.PersistenceException e){
+            throw new PersistenceException("Error al registrar al cliente" ,e);
         }
     }
 }
