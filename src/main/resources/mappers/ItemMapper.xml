@@ -14,7 +14,7 @@
 
         FROM VI_ITEMS as i
 
-        WHERE i.id = #{idt};
+        WHERE i.id = #{id};
 
     </select>
 

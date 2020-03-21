@@ -71,11 +71,11 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     }
 
     @Override
-    public List<Item> consultarItemsDisponibles() {
+    public List<Item> consultarItemsDisponibles() throws ExcepcionServiciosAlquiler {
         try{
             return itemDAO.consultarItemsDisponibles();
         } catch (PersistenceException ex) {
-            throw new UnsupportedOperationException("Error al consultar items disponibles" , ex);
+            throw new ExcepcionServiciosAlquiler("Error al consultar items disponibles" , ex);
         }
     }
 
@@ -92,7 +92,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
             int dias=(int) ((fechaDevolucion.getTime()-fechafinrenta.getTime())/86400000);
             return dias * multa;
         } catch (PersistenceException ex) {
-            throw new UnsupportedOperationException("Error al consultar items disponibles" , ex);
+            throw new ExcepcionServiciosAlquiler("Error al consultar items disponibles" , ex);
         }
     }
 
@@ -101,7 +101,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
         try{
             return tipoitemDAO.load(id);
         } catch (PersistenceException ex) {
-            throw new UnsupportedOperationException("Error al consultar el tipo de item" , ex);
+            throw new ExcepcionServiciosAlquiler("Error al consultar el tipo de item" , ex);
         }
     }
 
@@ -110,7 +110,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
         try{
             return tipoitemDAO.loadTipoItems();
         } catch (PersistenceException ex) {
-            throw new UnsupportedOperationException("Error al consultar los tipos de items" , ex);
+            throw new ExcepcionServiciosAlquiler("Error al consultar los tipos de items" , ex);
         }
     }
 
@@ -123,7 +123,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
             calendar.add(Calendar.DAY_OF_YEAR, numdias);
             clienteDAO.agregarItemRentadoACliente(docu,item.getId(),date,new java.sql.Date(calendar.getTime().getTime()));
         }  catch (PersistenceException ex) {
-            throw new UnsupportedOperationException("Error al agregar item rentado al cliente" , ex);
+            throw new ExcepcionServiciosAlquiler("Error al agregar item rentado al cliente" , ex);
         }
     }
 
@@ -132,7 +132,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
         try{
             clienteDAO.registrarCliente(c);
         } catch (PersistenceException ex) {
-            throw new UnsupportedOperationException("Error al registrar cliente" , ex);
+            throw new ExcepcionServiciosAlquiler("Error al registrar cliente" , ex);
         }
     }
 
@@ -143,7 +143,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
             long tarifa =  item.getTarifaxDia();
             return numdias * tarifa;
         } catch (PersistenceException ex) {
-            throw new UnsupportedOperationException("Error al consultar el el costo de alquiler.", ex);
+            throw new ExcepcionServiciosAlquiler("Error al consultar el el costo de alquiler.", ex);
         }
     }
 
@@ -152,7 +152,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
         try {
             itemDAO.actualizarTarifaItem(id,tarifa);
         } catch (PersistenceException ex)  {
-            throw new UnsupportedOperationException("No se pudo actualizar tarifa .", ex);
+            throw new ExcepcionServiciosAlquiler("No se pudo actualizar tarifa .", ex);
         }
 
     }
@@ -161,7 +161,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
         try {
             itemDAO.save(i);
         } catch (PersistenceException ex) {
-            throw new UnsupportedOperationException("No se pudo registrar item", ex);
+            throw new ExcepcionServiciosAlquiler("No se pudo registrar item", ex);
         }
     }
 
@@ -170,7 +170,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
         try {
             clienteDAO.vetarCliente(docu,estado);
         } catch (PersistenceException ex) {
-            throw new UnsupportedOperationException("No se pudo vetar al cliente", ex);
+            throw new ExcepcionServiciosAlquiler("No se pudo vetar al cliente", ex);
         }
 
     }
