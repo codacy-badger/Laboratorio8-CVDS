@@ -40,4 +40,6 @@ public interface ClienteMapper {
     public List<ItemRentado> consultarItems(@Param("idcliente") long id);
 
     public void registrarCliente(@Param("cliente") Cliente c);
+
+    public void vetarCliente(@Param("docu") long docu, @Param("estado") boolean estado);
 }

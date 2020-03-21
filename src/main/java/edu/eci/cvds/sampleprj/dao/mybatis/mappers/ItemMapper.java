@@ -23,4 +23,6 @@ public interface ItemMapper {
     public int consultarMultaRetrasoxDia(@Param("id")int id);
 
     public List<Item> consultarItemsDisponibles();
+
+    public void  actualizarTarifaItem(@Param("id")int id , @Param("tarifa")long tarifa);
 }

@@ -8,6 +8,8 @@ import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
 import edu.eci.cvds.samples.entities.TipoItem;
+import org.mybatis.guice.transactional.Transactional;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class MyBATISItemDAO implements ItemDAO{
     @Inject
     private ItemMapper itemMapper;
 
+    @Transactional
     @Override
     public void save(Item it) throws PersistenceException{
         try{
@@ -68,6 +71,17 @@ public class MyBATISItemDAO implements ItemDAO{
         }
         catch(org.apache.ibatis.exceptions.PersistenceException e){
             throw new PersistenceException("Error al consultar items disponibles",e);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void actualizarTarifaItem(int id, long tarifa) throws PersistenceException {
+        try {
+            itemMapper.actualizarTarifaItem(id,tarifa);
+        }
+        catch(org.apache.ibatis.exceptions.PersistenceException e) {
+            throw new PersistenceException("Error al actualizar tarifa del item", e);
         }
     }
 }

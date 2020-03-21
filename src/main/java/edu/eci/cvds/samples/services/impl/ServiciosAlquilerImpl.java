@@ -18,8 +18,11 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
     @Inject
     private ItemDAO itemDAO;
+    @Inject
     private ClienteDAO clienteDAO;
+    @Inject
     private ItemRentadoDAO itemRentadoDAO;
+    @Inject
     private TipoItemDAO tipoitemDAO;
 
     @Override
@@ -135,20 +138,40 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
     @Override
     public long consultarCostoAlquiler(int iditem, int numdias) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            Item item = itemDAO.load(iditem);
+            long tarifa =  item.getTarifaxDia();
+            return numdias * tarifa;
+        } catch (PersistenceException ex) {
+            throw new UnsupportedOperationException("Error al consultar el el costo de alquiler.", ex);
+        }
     }
 
     @Override
     public void actualizarTarifaItem(int id, long tarifa) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            itemDAO.actualizarTarifaItem(id,tarifa);
+        } catch (PersistenceException ex)  {
+            throw new UnsupportedOperationException("No se pudo actualizar tarifa .", ex);
+        }
+
     }
     @Override
     public void registrarItem(Item i) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            itemDAO.save(i);
+        } catch (PersistenceException ex) {
+            throw new UnsupportedOperationException("No se pudo registrar item", ex);
+        }
     }
 
     @Override
     public void vetarCliente(long docu, boolean estado) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            clienteDAO.vetarCliente(docu,estado);
+        } catch (PersistenceException ex) {
+            throw new UnsupportedOperationException("No se pudo vetar al cliente", ex);
+        }
+
     }
 }

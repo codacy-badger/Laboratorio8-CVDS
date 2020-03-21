@@ -108,6 +108,10 @@
         insert into VI_ITEMRENTADO(CLIENTES_documento,ITEMS_id,fechainiciorenta, fechafinrenta) values (#{idcl},#{idit},#{Fechai},#{Fechaf});
     </insert>
 
+    <update parameterType="map" id="vetarCliente">
+    update VI_CLIENTES set vetado=#{estado} where documento=#{docu};
+    </update>
+
 
     <resultMap type='Cliente' id='ClienteResult'>
         <id property='documento' column='documentoC'/>

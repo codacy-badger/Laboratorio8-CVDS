@@ -7,6 +7,7 @@ import edu.eci.cvds.sampleprj.dao.PersistenceException;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.ItemRentado;
+import org.mybatis.guice.transactional.Transactional;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -38,7 +39,7 @@ public class MyBATISClienteDAO implements ClienteDAO {
             throw new PersistenceException("Error al consultar cliente con documento"+id,e);
         }
     }
-
+    @Transactional
     @Override
     public void agregarItemRentadoACliente(long id, int idit, Date fechainicio, Date fechafin) throws PersistenceException {
         try{
@@ -59,6 +60,7 @@ public class MyBATISClienteDAO implements ClienteDAO {
         }
     }
 
+    @Transactional
     @Override
     public void registrarCliente(Cliente c) throws PersistenceException {
         try{
@@ -66,6 +68,17 @@ public class MyBATISClienteDAO implements ClienteDAO {
         }
         catch(org.apache.ibatis.exceptions.PersistenceException e){
             throw new PersistenceException("Error al registrar al cliente" ,e);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void vetarCliente(long docu, boolean estado) throws PersistenceException {
+        try{
+            clienteMapper.vetarCliente(docu,estado);
+        }
+        catch(org.apache.ibatis.exceptions.PersistenceException e){
+            throw new PersistenceException("Error al vetar cliente" ,e);
         }
     }
 }
