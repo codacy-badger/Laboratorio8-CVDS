@@ -1,10 +1,10 @@
-CREATE TABLE IF NOT EXISTS `VI_CLIENTES` (
-  `documento` BIGINT(20) NOT NULL,
-  `nombre` VARCHAR(50)  NOT NULL,
-  `telefono` VARCHAR(20)  NOT NULL,
-  `direccion` VARCHAR(150)  NOT NULL,
-  `email` VARCHAR(150)  NOT NULL,
-  `vetado` TINYINT(1) NOT NULL);
+CREATE TABLE IF NOT EXISTS VI_CLIENTES (
+  documento BIGINT(20) NOT NULL,
+  nombre VARCHAR(50)  NOT NULL,
+  telefono VARCHAR(20)  NOT NULL,
+  direccion VARCHAR(150)  NOT NULL,
+  email VARCHAR(150)  NOT NULL,
+  vetado TINYINT(1) NOT NULL);
 
 
 -- -----------------------------------------------------

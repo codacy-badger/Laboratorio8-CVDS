@@ -29,7 +29,7 @@
     </select>
 
     <insert id="addTipoItem" parameterType="map" >
-        insert into VI_TIPOITEM(descripcion) values (#{des});
+        insert into VI_TIPOITEM(id,descripcion) values (#{it.id},#{it.descripcion});
     </insert>
 
     <resultMap type='TipoItem' id='TipoItemResult'>

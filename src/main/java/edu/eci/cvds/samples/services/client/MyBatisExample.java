@@ -26,6 +26,7 @@ import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemRentadoMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper;
+import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.ItemRentado;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -68,11 +69,15 @@ public class MyBatisExample {
 
         SqlSession sqlss = sessionfact.openSession();
 
+
         ItemMapper im = sqlss.getMapper(ItemMapper.class);
+        //System.out.println(im.consultarMultaRetrasoxDia(99));
         ClienteMapper cm = sqlss.getMapper(ClienteMapper.class);
+        //cm.registrarCliente(new Cliente("Julian", 123322, "235556", "cll 777","julian@gmail.com"));
         ItemRentadoMapper ir = sqlss.getMapper(ItemRentadoMapper.class);
+        System.out.println(ir.consultarItems());
         TipoItemMapper tm = sqlss.getMapper(TipoItemMapper.class);
-        System.out.println("Consultar item rentado por id");
+        /**System.out.println("Consultar item rentado por id");
         System.out.println(ir.consultarItemRentado(2132577));
         System.out.println(" ");
         System.out.println("Consultar tipo items");
@@ -92,7 +97,7 @@ public class MyBatisExample {
         System.out.println(" ");
         System.out.println("Consultar items por id ");
         System.out.println(im.consultarItem(1));
-        System.out.println(" ");
+        System.out.println(" ");*/
         
         // Agregar item rentado al cliente
         // Insertar item

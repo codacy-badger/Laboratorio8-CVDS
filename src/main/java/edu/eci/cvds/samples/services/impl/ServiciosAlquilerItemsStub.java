@@ -58,6 +58,15 @@ public class ServiciosAlquilerItemsStub implements ServiciosAlquiler {
     }
 
     @Override
+    public void registrarTipoItem(TipoItem tipoitem) throws ExcepcionServiciosAlquiler {
+        if (!tipositems.containsKey(tipoitem.getID())) {
+            tipositems.put(tipoitem.getID(),tipoitem);
+        } else {
+            throw new ExcepcionServiciosAlquiler("El item " + tipoitem.getID() + " ya esta registrado.");
+        }
+    }
+
+    @Override
     public void registrarCliente(Cliente p) throws ExcepcionServiciosAlquiler {
         if (!clientes.containsKey(p.getDocumento())) {
             clientes.put(p.getDocumento(), p);
@@ -180,7 +189,6 @@ public class ServiciosAlquilerItemsStub implements ServiciosAlquiler {
         }
         else{
             ItemRentado ir=itemsrentados.get(iditem);
-
             LocalDate fechaMinimaEntrega=ir.getFechafinrenta().toLocalDate();
             LocalDate fechaEntrega=fechaDevolucion.toLocalDate();
             long diasRetraso = ChronoUnit.DAYS.between(fechaMinimaEntrega, fechaEntrega);

@@ -7,15 +7,11 @@
 
 
 
-    <select parameterType="map" id="consultarMultaRetrasoxDia" resultMap="ItemResult">
+    <select parameterType="map" resultType="int" id="consultarMultaRetrasoxDia">
         select
-
         i.tarifaxdia
-
         FROM VI_ITEMS as i
-
         WHERE i.id = #{id};
-
     </select>
 
     <select parameterType="map" id="consultarItems" resultMap="ItemResult">
@@ -63,7 +59,7 @@
     </select>
 
     <insert id="insertarItem" parameterType="map" >
-        insert into VI_ITEMS(nombre,descripcion,fechalanzamiento,tarifaxdia,formatorenta,genero,TIPOITEM_id) values (#{item.nombre},#{item.descripcion},#{item.fechaLanzamiento},#{item.tarifaxdia},#{item.formatoRenta},#{item.genero},#{item.TIPOITEM_id});
+        insert into VI_ITEMS(id,nombre,descripcion,fechalanzamiento,tarifaxdia,formatorenta,genero,TIPOITEM_id) values (#{item.id},#{item.nombre},#{item.descripcion},#{item.fechaLanzamiento},#{item.tarifaxDia},#{item.formatoRenta},#{item.genero},#{item.tipo.id});
     </insert>
 
     <update parameterType="map" id="actualizarTarifaItem">
@@ -76,7 +72,7 @@
         <result property='nombre' column='item_nombre'/>
         <result property='descripcion' column='item_descripcion'/>
         <result property='fechaLanzamiento' column='item_fechalanzamiento'/>
-        <result property='tarifaxdia' column='item_tarifaxdiaa'/>
+        <result property='tarifaxDia' column='item_tarifaxdia'/>
         <result property='formatoRenta' column='item_formatorenta'/>
         <result property='genero' column='item_genero'/>
         <association property="tipo" javaType="TipoItem" resultMap="edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper.TipoItemResult" columnPrefix="tipoItem_" ></association>

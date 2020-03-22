@@ -9,7 +9,11 @@ import edu.eci.cvds.samples.entities.ItemRentado;
 import edu.eci.cvds.samples.entities.TipoItem;
 import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
+import org.mybatis.guice.transactional.Transactional;
+
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.List;
 
@@ -24,6 +28,15 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     private ItemRentadoDAO itemRentadoDAO;
     @Inject
     private TipoItemDAO tipoitemDAO;
+
+    @Override
+    public void registrarTipoItem(TipoItem tipoitem) throws ExcepcionServiciosAlquiler {
+        try{
+            tipoitemDAO.save(tipoitem);
+        } catch (PersistenceException e){
+            throw new ExcepcionServiciosAlquiler("error al registrar tipo item", e);
+        }
+    }
 
     @Override
     public int valorMultaRetrasoxDia(int itemId) throws ExcepcionServiciosAlquiler {
@@ -82,14 +95,19 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     @Override
     public long consultarMultaAlquiler(int iditem, Date fechaDevolucion) throws ExcepcionServiciosAlquiler {
         try{
+            List<ItemRentado> items = itemRentadoDAO.loadItems();
+            System.out.println("hola");
+            for(int i=0 ; i < items.size() ; i++){
+                System.out.println(items.get(i).getId());
+            }
             ItemRentado itemRentado = itemRentadoDAO.load(iditem);
             Item item = itemDAO.load(iditem);
             if(item == null){
                 throw new ExcepcionServiciosAlquiler("No hay información de el item rentado: "+ iditem);
             }
             long multa = item.getTarifaxDia();
-            Date fechafinrenta = itemRentado.getFechafinrenta();
-            int dias=(int) ((fechaDevolucion.getTime()-fechafinrenta.getTime())/86400000);
+            LocalDate fechafinrenta=itemRentado.getFechafinrenta().toLocalDate();
+            long dias = ChronoUnit.DAYS.between(fechafinrenta, fechaDevolucion.toLocalDate());
             return dias * multa;
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al consultar items disponibles" , ex);
@@ -99,6 +117,9 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     @Override
     public TipoItem consultarTipoItem(int id) throws ExcepcionServiciosAlquiler {
         try{
+            if(tipoitemDAO.load(id)==null){
+                throw new ExcepcionServiciosAlquiler("el tipo item no existe");
+            }
             return tipoitemDAO.load(id);
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al consultar el tipo de item" , ex);
@@ -117,6 +138,9 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     @Override
     public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {
         try{
+            if(clienteDAO.consultarCliente(docu)==null){
+                throw new ExcepcionServiciosAlquiler("El cliente no existe") ;
+            }
             int idItem = item.getId();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
@@ -150,6 +174,9 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     @Override
     public void actualizarTarifaItem(int id, long tarifa) throws ExcepcionServiciosAlquiler {
         try {
+            if(itemDAO.load(id)==null){
+                throw new ExcepcionServiciosAlquiler("No existe ese item.");
+            }
             itemDAO.actualizarTarifaItem(id,tarifa);
         } catch (PersistenceException ex)  {
             throw new ExcepcionServiciosAlquiler("No se pudo actualizar tarifa .", ex);
@@ -157,6 +184,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
     }
     @Override
+    @Transactional
     public void registrarItem(Item i) throws ExcepcionServiciosAlquiler {
         try {
             itemDAO.save(i);
@@ -168,6 +196,9 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     @Override
     public void vetarCliente(long docu, boolean estado) throws ExcepcionServiciosAlquiler {
         try {
+            if(clienteDAO.consultarCliente(docu)==null){
+                throw new ExcepcionServiciosAlquiler("El cliente no existe");
+            }
             clienteDAO.vetarCliente(docu,estado);
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("No se pudo vetar al cliente", ex);

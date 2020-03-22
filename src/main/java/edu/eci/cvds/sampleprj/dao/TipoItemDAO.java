@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TipoItemDAO {
 
-    public void save(String des) throws PersistenceException;
+    public void save(TipoItem tipoitem) throws PersistenceException;
 
     public TipoItem load(int id) throws PersistenceException;
 
