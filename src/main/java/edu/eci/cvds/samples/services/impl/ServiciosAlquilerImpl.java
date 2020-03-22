@@ -14,6 +14,7 @@ import org.mybatis.guice.transactional.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -39,9 +40,9 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     }
 
     @Override
-    public int valorMultaRetrasoxDia(int itemId) throws ExcepcionServiciosAlquiler {
+    public long valorMultaRetrasoxDia(int itemId) throws ExcepcionServiciosAlquiler {
         try {
-            return itemDAO.consultarMultaRetrasoxDia(itemId);
+            return itemDAO.load(itemId).getTarifaxDia();
         } catch (PersistenceException e){
             throw new ExcepcionServiciosAlquiler("error al consultar multa retraso x dia", e);
         }
@@ -94,26 +95,21 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
     @Override
     public long consultarMultaAlquiler(int iditem, Date fechaDevolucion) throws ExcepcionServiciosAlquiler {
-        try{
-            List<ItemRentado> items = itemRentadoDAO.loadItems();
-            System.out.println("hola");
-            for(int i=0 ; i < items.size() ; i++){
-                System.out.println(items.get(i).getId());
+        List<Cliente> clientes = consultarClientes();
+        for (int i=0 ; i<clientes.size() ; i++) {
+            ArrayList<ItemRentado> rentados = clientes.get(i).getRentados();
+            for (int j=0 ; j<rentados.size() ; j++) {
+                if (rentados.get(j).getItem().getId() == iditem) {
+                    LocalDate fechafinrenta = rentados.get(j).getFechafinrenta().toLocalDate();
+                    LocalDate fechadevolucion = fechaDevolucion.toLocalDate();
+                    long diasRetraso = ChronoUnit.DAYS.between(fechafinrenta, fechadevolucion);
+                    if (diasRetraso < 0) { return 0; }
+                    return diasRetraso * valorMultaRetrasoxDia(rentados.get(j).getId());
+                }
             }
-            ItemRentado itemRentado = itemRentadoDAO.load(iditem);
-            Item item = itemDAO.load(iditem);
-            if(item == null){
-                throw new ExcepcionServiciosAlquiler("No hay información de el item rentado: "+ iditem);
-            }
-            long multa = item.getTarifaxDia();
-            LocalDate fechafinrenta=itemRentado.getFechafinrenta().toLocalDate();
-            long dias = ChronoUnit.DAYS.between(fechafinrenta, fechaDevolucion.toLocalDate());
-            return dias * multa;
-        } catch (PersistenceException ex) {
-            throw new ExcepcionServiciosAlquiler("Error al consultar items disponibles" , ex);
         }
+        throw  new ExcepcionServiciosAlquiler("El item"+iditem+"no se encuentra rentado");
     }
-
     @Override
     public TipoItem consultarTipoItem(int id) throws ExcepcionServiciosAlquiler {
         try{
@@ -134,7 +130,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
             throw new ExcepcionServiciosAlquiler("Error al consultar los tipos de items" , ex);
         }
     }
-
+    @Transactional
     @Override
     public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {
         try{
@@ -150,7 +146,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
             throw new ExcepcionServiciosAlquiler("Error al agregar item rentado al cliente" , ex);
         }
     }
-
+    @Transactional
     @Override
     public void registrarCliente(Cliente c) throws ExcepcionServiciosAlquiler {
         try{
@@ -164,13 +160,16 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     public long consultarCostoAlquiler(int iditem, int numdias) throws ExcepcionServiciosAlquiler {
         try {
             Item item = itemDAO.load(iditem);
+            if(item==null){
+                throw new ExcepcionServiciosAlquiler("El Item no existe");
+            }
             long tarifa =  item.getTarifaxDia();
             return numdias * tarifa;
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al consultar el el costo de alquiler.", ex);
         }
     }
-
+    @Transactional
     @Override
     public void actualizarTarifaItem(int id, long tarifa) throws ExcepcionServiciosAlquiler {
         try {
@@ -192,7 +191,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
             throw new ExcepcionServiciosAlquiler("No se pudo registrar item", ex);
         }
     }
-
+    @Transactional
     @Override
     public void vetarCliente(long docu, boolean estado) throws ExcepcionServiciosAlquiler {
         try {

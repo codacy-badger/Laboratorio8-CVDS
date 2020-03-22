@@ -8,9 +8,9 @@
 
     <select parameterType="map" id='consultarItemRentado' resultMap="ItemRentadoResult">
 			select
-			ir.id as id,
-			ir.fechainiciorenta as fechainiciorenta,
-			ir.fechafinrenta as fechafinrenta,
+			ir.id ,
+			ir.fechainiciorenta ,
+			ir.fechafinrenta ,
 			i.id as item_id,
 			i.nombre as item_nombre,
 			i.descripcion as item_descripcion,
@@ -18,8 +18,8 @@
 			i.tarifaxdia as item_tarifaxdia,
 			i.formatorenta as item_formatorenta,
 			i.genero as item_genero,
-			ti.id as tipoItem_id,
-			ti.descripcion as tipoItem_descripcion
+			ti.id as item_tipoItem_id,
+			ti.descripcion as item_tipoItem_descripcion
 			FROM
 			VI_ITEMRENTADO as ir
 			join VI_ITEMS as i on ir.ITEMS_id=i.id
@@ -29,9 +29,9 @@
 
 	<select parameterType="map" id='consultarItems' resultMap="ItemRentadoResult">
 			select
-			ir.id as id,
-			ir.fechainiciorenta as fechainiciorenta,
-			ir.fechafinrenta as fechafinrenta,
+			ir.id ,
+			ir.fechainiciorenta ,
+			ir.fechafinrenta ,
 			i.id as item_id,
 			i.nombre as item_nombre,
 			i.descripcion as item_descripcion,
@@ -39,8 +39,8 @@
 			i.tarifaxdia as item_tarifaxdia,
 			i.formatorenta as item_formatorenta,
 			i.genero as item_genero,
-			ti.id as tipoItem_id,
-			ti.descripcion as tipoItem_descripcion
+			ti.id as item_tipoItem_id,
+			ti.descripcion as item_tipoItem_descripcion
 			FROM
 			VI_ITEMRENTADO as ir
 			join VI_ITEMS as i on ir.ITEMS_id=i.id

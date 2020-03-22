@@ -6,6 +6,7 @@ import edu.eci.cvds.samples.entities.ItemRentado;
 import edu.eci.cvds.samples.entities.TipoItem;
 import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
+import org.mybatis.guice.transactional.Transactional;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 public class ServiciosAlquilerItemsStub implements ServiciosAlquiler {
 
-    private static final int MULTA_DIARIA=5000;
+    private static final long MULTA_DIARIA=5000;
     private final static long MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
 
     private final Map<Long,Cliente> clientes;
@@ -39,7 +40,7 @@ public class ServiciosAlquilerItemsStub implements ServiciosAlquiler {
     }
 
     @Override
-    public int valorMultaRetrasoxDia(int itemId) {
+    public long valorMultaRetrasoxDia(int itemId) {
         return MULTA_DIARIA;
     }
 
@@ -56,7 +57,7 @@ public class ServiciosAlquilerItemsStub implements ServiciosAlquiler {
     public List<Cliente> consultarClientes() throws ExcepcionServiciosAlquiler {
         return  new LinkedList<>(clientes.values());
     }
-
+    @Transactional
     @Override
     public void registrarTipoItem(TipoItem tipoitem) throws ExcepcionServiciosAlquiler {
         if (!tipositems.containsKey(tipoitem.getID())) {
@@ -65,7 +66,7 @@ public class ServiciosAlquilerItemsStub implements ServiciosAlquiler {
             throw new ExcepcionServiciosAlquiler("El item " + tipoitem.getID() + " ya esta registrado.");
         }
     }
-
+    @Transactional
     @Override
     public void registrarCliente(Cliente p) throws ExcepcionServiciosAlquiler {
         if (!clientes.containsKey(p.getDocumento())) {
@@ -74,7 +75,7 @@ public class ServiciosAlquilerItemsStub implements ServiciosAlquiler {
             throw new ExcepcionServiciosAlquiler("El cliente con documento "+p+" ya esta registrado.");
         }
     }
-
+    @Transactional
     @Override
     public void vetarCliente(long docu, boolean estado) throws ExcepcionServiciosAlquiler {
         if(clientes.containsKey(docu)){
@@ -109,7 +110,7 @@ public class ServiciosAlquilerItemsStub implements ServiciosAlquiler {
             throw new ExcepcionServiciosAlquiler("El item " + i.getId() + " ya esta registrado.");
         }
     }
-
+    @Transactional
     @Override
     public void actualizarTarifaItem(int id, long tarifa) throws ExcepcionServiciosAlquiler {
         if (!itemsDisponibles.containsKey(id)) {
@@ -135,7 +136,7 @@ public class ServiciosAlquilerItemsStub implements ServiciosAlquiler {
     public List<TipoItem> consultarTiposItem() throws ExcepcionServiciosAlquiler {
         return  new LinkedList<>(tipositems.values());
     }
-
+    @Transactional
     @Override
     public void registrarAlquilerCliente(Date date,long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {
 

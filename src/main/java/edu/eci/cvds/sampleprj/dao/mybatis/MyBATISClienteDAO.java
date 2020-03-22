@@ -43,7 +43,7 @@ public class MyBATISClienteDAO implements ClienteDAO {
     @Override
     public void agregarItemRentadoACliente(long id, int idit, Date fechainicio, Date fechafin) throws PersistenceException {
         try{
-            clienteMapper.consultarClientes();
+            clienteMapper.agregarItemRentadoACliente(id,idit,fechainicio,fechafin);
         }
         catch(org.apache.ibatis.exceptions.PersistenceException e){
             throw new PersistenceException("Error al agregar item rentado al cliente con id del item : "+id+" y id del tipo del item:"+idit,e);

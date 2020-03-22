@@ -18,15 +18,15 @@
         ir.fechainiciorenta as ir_fechainiciorenta,
         ir.fechafinrenta as ir_fechafinrenta,
 
-        i.id as item_id,
-        i.nombre as item_nombre,
-        i.descripcion as item_descripcion,
-        i.fechalanzamiento as item_fechalanzamiento,
-        i.tarifaxdia as item_tarifaxdia,
-        i.formatorenta as item_formatorenta,
-        i.genero as item_genero,
-        ti.id as tipoItem_id,
-        ti.descripcion as tipoItem_descripcion
+        i.id as ir_item_id,
+        i.nombre as ir_item_nombre,
+        i.descripcion as ir_item_descripcion,
+        i.fechalanzamiento as ir_item_fechalanzamiento,
+        i.tarifaxdia as ir_item_tarifaxdia,
+        i.formatorenta as ir_item_formatorenta,
+        i.genero as ir_item_genero,
+        ti.id as ir_item_tipoItem_id,
+        ti.descripcion as ir_item_tipoItem_descripcion
 
         FROM VI_CLIENTES as c
         left join VI_ITEMRENTADO as ir on c.documento=ir.CLIENTES_documento
@@ -48,15 +48,15 @@
         ir.fechainiciorenta as ir_fechainiciorenta,
         ir.fechafinrenta as ir_fechafinrenta,
 
-        i.id as item_id,
-        i.nombre as item_nombre,
-        i.descripcion as item_descripcion,
-        i.fechalanzamiento as item_fechalanzamiento,
-        i.tarifaxdia as item_tarifaxdia,
-        i.formatorenta as item_formatorenta,
-        i.genero as item_genero,
-        ti.id as tipoItem_id,
-        ti.descripcion as tipoItem_descripcion
+        i.id as ir_item_id,
+        i.nombre as ir_item_nombre,
+        i.descripcion as ir_item_descripcion,
+        i.fechalanzamiento as ir_item_fechalanzamiento,
+        i.tarifaxdia as ir_item_tarifaxdia,
+        i.formatorenta as ir_item_formatorenta,
+        i.genero as ir_item_genero,
+        ti.id as ir_item_tipoItem_id,
+        ti.descripcion as ir_item_tipoItem_descripcion
 
         FROM VI_CLIENTES as c
         left join VI_ITEMRENTADO as ir on c.documento=ir.CLIENTES_documento
@@ -85,15 +85,15 @@
         ir.fechainiciorenta as ir_fechainiciorenta,
         ir.fechafinrenta as ir_fechafinrenta,
 
-        i.id as item_id,
-        i.nombre as item_nombre,
-        i.descripcion as item_descripcion,
-        i.fechalanzamiento as item_fechalanzamiento,
-        i.tarifaxdia as item_tarifaxdia,
-        i.formatorenta as item_formatorenta,
-        i.genero as item_genero,
-        ti.id as tipoItem_id,
-        ti.descripcion as tipoItem_descripcion
+        i.id as ir_item_id,
+        i.nombre as ir_item_nombre,
+        i.descripcion as ir_item_descripcion,
+        i.fechalanzamiento as ir_item_fechalanzamiento,
+        i.tarifaxdia as ir_item_tarifaxdia,
+        i.formatorenta as ir_item_formatorenta,
+        i.genero as ir_item_genero,
+        ti.id as ir_item_tipoItem_id,
+        ti.descripcion as ir_item_tipoItem_descripcion
 
         FROM VI_CLIENTES as c
         left join VI_ITEMRENTADO as ir on c.documento=ir.CLIENTES_documento
@@ -105,7 +105,7 @@
     </select>
 
     <insert id="agregarItemRentadoACliente" parameterType="map" >
-        insert into VI_ITEMRENTADO(CLIENTES_documento,ITEMS_id,fechainiciorenta, fechafinrenta) values (#{idcl},#{idit},#{Fechai},#{Fechaf});
+        insert into VI_ITEMRENTADO(CLIENTES_documento,ITEMS_id,fechainiciorenta, fechafinrenta) values (#{idcli},#{idit},#{fechainicio},#{fechafin});
     </insert>
 
     <update parameterType="map" id="vetarCliente">

@@ -17,15 +17,15 @@
     <select parameterType="map" id="consultarItems" resultMap="ItemResult">
         select
 
-        i.id as item_id,
-        i.nombre as item_nombre,
-        i.descripcion as item_descripcion,
-        i.fechalanzamiento as item_fechalanzamiento,
-        i.tarifaxdia as item_tarifaxdia,
-        i.formatorenta as item_formatorenta,
-        i.genero as item_genero,
-        ti.id as tipoItem_id,
-        ti.descripcion as tipoItem_descripcion
+        i.id ,
+        i.nombre,
+        i.descripcion,
+        i.fechalanzamiento,
+        i.tarifaxdia ,
+        i.formatorenta,
+        i.genero,
+        ti.id as item_tipoItem_id,
+        ti.descripcion as item_tipoItem_descripcion
 
         FROM VI_ITEMS as i
         left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id;
@@ -35,13 +35,13 @@
     <select parameterType="map" id="consultarItem" resultMap="ItemResult">
         select
 
-        i.id as item_id,
-        i.nombre as item_nombre,
-        i.descripcion as item_descripcion,
-        i.fechalanzamiento as item_fechalanzamiento,
-        i.tarifaxdia as item_tarifaxdia,
-        i.formatorenta as item_formatorenta,
-        i.genero as item_genero,
+        i.id ,
+        i.nombre,
+        i.descripcion,
+        i.fechalanzamiento,
+        i.tarifaxdia ,
+        i.formatorenta,
+        i.genero ,
         ti.id as tipoItem_id,
         ti.descripcion as tipoItem_descripcion
 
@@ -68,13 +68,13 @@
 
 
     <resultMap type='Item' id='ItemResult'>
-        <id property='id' column='item_id'/>
-        <result property='nombre' column='item_nombre'/>
-        <result property='descripcion' column='item_descripcion'/>
-        <result property='fechaLanzamiento' column='item_fechalanzamiento'/>
-        <result property='tarifaxDia' column='item_tarifaxdia'/>
-        <result property='formatoRenta' column='item_formatorenta'/>
-        <result property='genero' column='item_genero'/>
+        <id property='id' column='id'/>
+        <result property='nombre' column='nombre'/>
+        <result property='descripcion' column='descripcion'/>
+        <result property='fechaLanzamiento' column='fechalanzamiento'/>
+        <result property='tarifaxDia' column='tarifaxdia'/>
+        <result property='formatoRenta' column='formatorenta'/>
+        <result property='genero' column='genero'/>
         <association property="tipo" javaType="TipoItem" resultMap="edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper.TipoItemResult" columnPrefix="tipoItem_" ></association>
     </resultMap>
 

@@ -20,7 +20,6 @@ public interface ItemMapper {
     
     public void insertarItem(@Param("item")Item it);
 
-    public int consultarMultaRetrasoxDia(@Param("id")int id);
 
     public List<Item> consultarItemsDisponibles();
 

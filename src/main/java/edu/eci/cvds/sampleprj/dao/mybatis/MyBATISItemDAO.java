@@ -54,15 +54,6 @@ public class MyBATISItemDAO implements ItemDAO{
 
     }
 
-    @Override
-    public int consultarMultaRetrasoxDia(int itemId) throws PersistenceException {
-        try{
-            return itemMapper.consultarMultaRetrasoxDia(itemId);
-        }
-        catch(org.apache.ibatis.exceptions.PersistenceException e){
-            throw new PersistenceException("Error al consultar retrado x dia",e);
-        }
-    }
 
     @Override
     public List<Item> consultarItemsDisponibles() throws PersistenceException {

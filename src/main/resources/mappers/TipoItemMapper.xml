@@ -9,8 +9,8 @@
     <select parameterType="map" id="getTiposItems" resultMap="TipoItemResult">
         select
 
-        ti.id as tipoItem_id,
-        ti.descripcion as tipoItem_descripcion
+        ti.id,
+        ti.descripcion
 
         FROM VI_TIPOITEM as ti;
 
@@ -19,8 +19,8 @@
     <select parameterType="map" id="getTipoItem" resultMap="TipoItemResult">
         select
 
-        ti.id as tipoItem_id,
-        ti.descripcion as tipoItem_descripcion
+        ti.id,
+        ti.descripcion
 
         FROM VI_TIPOITEM as ti
 
@@ -33,7 +33,7 @@
     </insert>
 
     <resultMap type='TipoItem' id='TipoItemResult'>
-        <id property='id' column='tipoItem_id'/>
-        <result property='descripcion' column='tipoItem_descripcion'/>
+        <id property='id' column='id'/>
+        <result property='descripcion' column='descripcion'/>
     </resultMap>
 </mapper>
