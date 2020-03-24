@@ -43,7 +43,8 @@
                 <p:inputText  id= "numdias" type="String" binding="#{dias}" > </p:inputText>
                 <p:commandButton value="Registrar" update="FormaAlquiler" action="registroCliente?faces-redirect = true" actionListener="#{AlquilerItem.registrarAlquiler(id.value,dias.value)}"/>
                 <p:commandButton value="Consultar Costo" update="FormaAlquiler"  actionListener="#{AlquilerItem.consultarCosto(id.value,dias.value)}"/>
-
+                <p:outputLabel value="Costo del alquiler"/>
+                <h:outputText value="#{AlquilerItem.getCosto()}"/>
                 </h:panelGrid>
         </h:form>
     </h:body>
