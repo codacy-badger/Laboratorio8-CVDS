@@ -11,14 +11,14 @@ import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ApplicationScoped;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 @ManagedBean(name = "AlquilerItem")
-@SessionScoped
+@ApplicationScoped
 public class AlquilerItemBeans extends BasePageBean {
     @Inject
     private ServiciosAlquiler serviciosAlquiler;
