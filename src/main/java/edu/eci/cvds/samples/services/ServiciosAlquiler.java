@@ -84,4 +84,5 @@ public interface ServiciosAlquiler {
 
    public abstract void registrarTipoItem(TipoItem tipoitem) throws ExcepcionServiciosAlquiler;
 
+
 }
